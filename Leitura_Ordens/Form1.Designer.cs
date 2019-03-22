@@ -60,6 +60,7 @@
             this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tOrdensG = new System.Windows.Forms.Timer(this.components);
+            this.lblLastPrice = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.gOrdens)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gOrdensOR)).BeginInit();
             this.SuspendLayout();
@@ -367,11 +368,23 @@
             this.tOrdensG.Interval = 10;
             this.tOrdensG.Tick += new System.EventHandler(this.tOrdensG_Tick);
             // 
+            // lblLastPrice
+            // 
+            this.lblLastPrice.AutoSize = true;
+            this.lblLastPrice.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblLastPrice.Location = new System.Drawing.Point(490, 38);
+            this.lblLastPrice.Name = "lblLastPrice";
+            this.lblLastPrice.Size = new System.Drawing.Size(19, 25);
+            this.lblLastPrice.TabIndex = 13;
+            this.lblLastPrice.Text = ".";
+            this.lblLastPrice.Visible = false;
+            // 
             // btnPararRelogio
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1296, 559);
+            this.Controls.Add(this.lblLastPrice);
             this.Controls.Add(this.gOrdensOR);
             this.Controls.Add(this.gOrdens);
             this.Controls.Add(this.btnContinuarRelogio);
@@ -423,6 +436,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn7;
         private System.Windows.Forms.Timer tOrdensG;
+        private System.Windows.Forms.Label lblLastPrice;
     }
 }
 

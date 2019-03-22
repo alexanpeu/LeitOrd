@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;    //classe para ler aquivos 
+using System.Globalization;
 
 namespace Leitura_Ordens
 {
@@ -143,6 +144,7 @@ namespace Leitura_Ordens
 
         private void tOrdens_Tick(object sender, EventArgs e)
         {
+            lblLastPrice.Visible = true;
             if (linhaLida < tamanhoLista)
             {
 
@@ -157,23 +159,17 @@ namespace Leitura_Ordens
                     // listBox2.Items.Add(list[tamanhoLista - linhaLida]);
                     linhaLida++;
                     //  listBox2.SetSelected(linhaLida, true);
-                    string agre;
-                    if (list[tamanhoLista - linhaLida].Agressor == "Comprador")
-                        agre = "C";
-                    else if (list[tamanhoLista - linhaLida].Agressor == "Vendedor")
-                        agre = "V";
-                    else if (list[tamanhoLista - linhaLida].Agressor == "Cross")
-                        agre = "CR";
-                    else if (list[tamanhoLista - linhaLida].Agressor == "Leilão")
-                        agre = "L";
+
 
 
                     gOrdens.Rows.Add(list[tamanhoLista - linhaLida].Hora,
-                        list[tamanhoLista - linhaLida].Preco.ToString(),
+                        list[tamanhoLista - linhaLida].Preco.ToString("F2", CultureInfo.InvariantCulture),
                         list[tamanhoLista - linhaLida].Qtd.ToString(),
                         list[tamanhoLista - linhaLida].CC, list[tamanhoLista - linhaLida].CV,
                         list[tamanhoLista - linhaLida].Agressor,
                         list[tamanhoLista - linhaLida].Num.ToString());
+
+                    lblLastPrice.Text = list[tamanhoLista - linhaLida].Preco.ToString("F2", CultureInfo.InvariantCulture);
                     if (paraScrooll == false)
                     {
                         gOrdens.FirstDisplayedScrollingRowIndex = gOrdens.RowCount - 1;
@@ -196,7 +192,7 @@ namespace Leitura_Ordens
                     linhaLidaOR++;
 
                     gOrdensOR.Rows.Add(listOR[0 + linhaLidaOR].Hora,
-                        listOR[0 + linhaLidaOR].Preco.ToString(),
+                        listOR[0 + linhaLidaOR].Preco.ToString("F2", CultureInfo.InvariantCulture),
                         listOR[0 + linhaLidaOR].Qtd.ToString(),
                         listOR[0 + linhaLidaOR].CC, listOR[0 + linhaLidaOR].CV,
                         listOR[0 + linhaLidaOR].Agressor,
@@ -280,7 +276,7 @@ namespace Leitura_Ordens
                 {
                     listOR.Add(new Ordem(oNumero, oPreco, oQuantidade, oCC, oCV, oHora, oAgressor));
                     quantOrdemOriginal = oQuantidadeProx;
-                    registroOr = registroOr - 1;
+                    registroOr --;
                 } //fim do if verifica se tá em leilao
                 else
                 {
@@ -333,11 +329,11 @@ namespace Leitura_Ordens
                         precoFinalBoleta = oPreco;
                         if (oAgressor == "Vendedor" && precoInicialBoleta > precoFinalBoleta && precoInicialBoleta > 0)
                         {
-                            oAgressor = oAgressor + "**";
+                            oAgressor += "**";
                         }
                         if (oAgressor == "Comprador" && precoInicialBoleta < precoFinalBoleta && precoInicialBoleta > 0)
                         {
-                            oAgressor = oAgressor + "**";
+                            oAgressor += "**";
                         }
 
                         listOR.Add(new Ordem(oNumero, oPreco, quantOrdemOriginal, agrC, agrV, oHora, oAgressor));
@@ -345,7 +341,7 @@ namespace Leitura_Ordens
                         boletada = false;
                         precoInicialBoleta = 0;
                         precoFinalBoleta = 0;
-                        registroOr = registroOr - 1;
+                        registroOr--;
                     }
                     else if (oHora == oHoraProx && oAgressor == oAgressorProx && oCV != oCVProx)
                     {
@@ -369,11 +365,11 @@ namespace Leitura_Ordens
                         precoFinalBoleta = oPreco;
                         if (oAgressor == "Vendedor" && precoInicialBoleta > precoFinalBoleta && precoInicialBoleta > 0)
                         {
-                            oAgressor = oAgressor + "**";
+                            oAgressor += "**";
                         }
                         if (oAgressor == "Comprador" && precoInicialBoleta < precoFinalBoleta && precoInicialBoleta > 0)
                         {
-                            oAgressor = oAgressor + "**";
+                            oAgressor += "**";
                         }
 
                         listOR.Add(new Ordem(oNumero, oPreco, quantOrdemOriginal, agrC, agrV, oHora, oAgressor));
@@ -381,7 +377,7 @@ namespace Leitura_Ordens
                         boletada = false;
                         precoInicialBoleta = 0;
                         precoFinalBoleta = 0;
-                        registroOr = registroOr - 1;
+                        registroOr--;
                     }
                     else if (oHora == oHoraProx && oAgressor != oAgressorProx)
                     {
@@ -405,11 +401,11 @@ namespace Leitura_Ordens
                         precoFinalBoleta = oPreco;
                         if (oAgressor == "Vendedor" && precoInicialBoleta > precoFinalBoleta && precoInicialBoleta > 0)
                         {
-                            oAgressor = oAgressor + "**";
+                            oAgressor += "**";
                         }
                         if (oAgressor == "Comprador" && precoInicialBoleta < precoFinalBoleta && precoInicialBoleta > 0)
                         {
-                            oAgressor = oAgressor + "**";
+                            oAgressor += "**";
                         }
 
                         listOR.Add(new Ordem(oNumero, oPreco, quantOrdemOriginal, agrC, agrV, oHora, oAgressor));
@@ -417,7 +413,7 @@ namespace Leitura_Ordens
                         boletada = false;
                         precoInicialBoleta = 0;
                         precoFinalBoleta = 0;
-                        registroOr = registroOr - 1;
+                        registroOr--;
                     }
                     else if (oHora != oHoraProx)
                     {
@@ -441,11 +437,11 @@ namespace Leitura_Ordens
                         precoFinalBoleta = oPreco;
                         if (oAgressor == "Vendedor" && precoInicialBoleta > precoFinalBoleta && precoInicialBoleta > 0)
                         {
-                            oAgressor = oAgressor + "**";
+                            oAgressor += "**";
                         }
                         if (oAgressor == "Comprador" && precoInicialBoleta < precoFinalBoleta && precoInicialBoleta > 0)
                         {
-                            oAgressor = oAgressor + "**";
+                            oAgressor += "**";
                         }
 
                         listOR.Add(new Ordem(oNumero, oPreco, quantOrdemOriginal, agrC, agrV, oHora, oAgressor));
@@ -453,7 +449,7 @@ namespace Leitura_Ordens
                         boletada = false;
                         precoInicialBoleta = 0;
                         precoFinalBoleta = 0;
-                        registroOr = registroOr - 1;
+                        registroOr--;
                     }
 
                 } //fim do if se não é leilão
