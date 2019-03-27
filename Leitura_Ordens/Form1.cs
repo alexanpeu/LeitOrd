@@ -26,6 +26,7 @@ namespace Leitura_Ordens
         string hora;
         string agressor;
         int numero;
+        double saldoAgressao = 0;
 
         bool paraScrooll = false;
         DateTime horaInicioScrool;
@@ -152,23 +153,36 @@ namespace Leitura_Ordens
                 horaS = "2019/03/18 " + horaS;
                 DateTime ordem = DateTime.Parse(horaS);
 
-
-
-                if (relogio >= ordem)
+                if (relogio == ordem)
                 {
+                    string seg = horaS.Substring(17);
+                    int segOrdem = int.Parse(seg);
+                    int segOrdem1 = segOrdem;
+                    while (segOrdem == segOrdem1)
+                    {
+                        linhaLida++;
+                        gOrdens.Rows.Add(list[tamanhoLista - linhaLida].Hora,
+                            list[tamanhoLista - linhaLida].Preco.ToString("F2", CultureInfo.InvariantCulture),
+                            list[tamanhoLista - linhaLida].Qtd.ToString(),
+                            list[tamanhoLista - linhaLida].CC, list[tamanhoLista - linhaLida].CV,
+                            list[tamanhoLista - linhaLida].Agressor,
+                            list[tamanhoLista - linhaLida].Num.ToString());
+                        seg = list[tamanhoLista - linhaLida].Hora;
+                        seg = seg.Substring(6);
+                        segOrdem1 = int.Parse(seg);
+                        if (list[tamanhoLista - linhaLida].Agressor == "Comprador")
+                            saldoAgressao += list[tamanhoLista - linhaLida].Qtd;
+                        else if (list[tamanhoLista - linhaLida].Agressor == "Vendedor")
+                            saldoAgressao -= list[tamanhoLista - linhaLida].Qtd;
+
+                        lblSaldoAgressao.Text = saldoAgressao.ToString();
+                        if (segOrdem1 != segOrdem)
+                            break;
+                    }
+
                     // listBox2.Items.Add(list[tamanhoLista - linhaLida]);
-                    linhaLida++;
                     //  listBox2.SetSelected(linhaLida, true);
-
-
-
-                    gOrdens.Rows.Add(list[tamanhoLista - linhaLida].Hora,
-                        list[tamanhoLista - linhaLida].Preco.ToString("F2", CultureInfo.InvariantCulture),
-                        list[tamanhoLista - linhaLida].Qtd.ToString(),
-                        list[tamanhoLista - linhaLida].CC, list[tamanhoLista - linhaLida].CV,
-                        list[tamanhoLista - linhaLida].Agressor,
-                        list[tamanhoLista - linhaLida].Num.ToString());
-
+                    
                     lblLastPrice.Text = list[tamanhoLista - linhaLida].Preco.ToString("F2", CultureInfo.InvariantCulture);
                     if (paraScrooll == false)
                     {
@@ -187,16 +201,29 @@ namespace Leitura_Ordens
                 string horaSOR = listOR[0 + linhaLidaOR].Hora;
                 horaSOR = "2019/03/18 " + horaSOR;
                 DateTime ordemOR = DateTime.Parse(horaSOR);
-                if (relogio >= ordemOR)
+                if (relogio == ordemOR)
                 {
-                    linhaLidaOR++;
+                    string segOR = horaSOR.Substring(17);
+                    int segOrdemOR = int.Parse(segOR);
+                    int segOrdem1OR = segOrdemOR;
+                    while (segOrdemOR == segOrdem1OR)
+                    {
+                        linhaLidaOR++;
+                        gOrdensOR.Rows.Add(listOR[0 + linhaLidaOR].Hora,
+                            listOR[0 + linhaLidaOR].Preco.ToString("F2", CultureInfo.InvariantCulture),
+                            listOR[0 + linhaLidaOR].Qtd.ToString(),
+                            listOR[0 + linhaLidaOR].CC, listOR[0 + linhaLidaOR].CV,
+                            listOR[0 + linhaLidaOR].Agressor,
+                            listOR[0 + linhaLidaOR].Num.ToString());
+                        segOR = listOR[0+ linhaLidaOR].Hora;
+                        segOR = segOR.Substring(6);
+                        segOrdem1OR = int.Parse(segOR);
+                        
+                        if (segOrdem1OR != segOrdemOR)
+                            break;
+                    }
 
-                    gOrdensOR.Rows.Add(listOR[0 + linhaLidaOR].Hora,
-                        listOR[0 + linhaLidaOR].Preco.ToString("F2", CultureInfo.InvariantCulture),
-                        listOR[0 + linhaLidaOR].Qtd.ToString(),
-                        listOR[0 + linhaLidaOR].CC, listOR[0 + linhaLidaOR].CV,
-                        listOR[0 + linhaLidaOR].Agressor,
-                        listOR[0 + linhaLidaOR].Num.ToString());
+                       
                     if (paraScroollOR == false)
                     {
                         gOrdensOR.FirstDisplayedScrollingRowIndex = gOrdensOR.RowCount - 1;
